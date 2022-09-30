@@ -4,11 +4,10 @@
  */
 package com.grupo10.app.rents.controller;
 
-import com.grupo10.app.rents.model.IQuadbikeRepository;
-import com.grupo10.app.rents.model.Quadbike;
+import com.grupo10.app.rents.entities.Quadbike;
+import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author user
+ * @author Andres
  */
 @RestController
 @RequestMapping("/api/Message")
@@ -27,20 +26,21 @@ public class MessageController {
     IQuadbikeRepository repository;
     
     @GetMapping("/all")
-    public Iterable<Quadbike> getQuadbike(){
+    public Iterable<Quadbike> getQuadbikes(){
         Iterable<Quadbike> response = repository.findAll();
+        
         return response;
     }
     
-    
     @PostMapping("/save")
-    public String createquadbike(@RequestBody Quadbike request){
+    public String createQuadbike(@RequestBody Quadbike request){
         
         repository.save(request);
         
-        return "created...";
+        return "crated....";
     }
+
+
     
     
 }
-    

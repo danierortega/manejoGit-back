@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.grupo10.app.rents.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,20 +28,17 @@ import lombok.Setter;
 public class Category implements Serializable {
 
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
-    @Column(name="id")    
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    public Integer id;
     @Column
-    private String name;    
+    private String name;
     @Column
     private String description;
     
-    @OneToMany(cascade={CascadeType.PERSIST},mappedBy="category")
-    @JsonIgnoreProperties("category")
-    private List<Quadbike> quadbikes;  
-    
-    
-    
-    
+    @OneToMany(cascade={CascadeType.PERSIST}, mappedBy = "category") //unca tegoria puede tener muchas cuatrimotos
+    @JsonIgnoreProperties({"category","reservations"})
+
+    private List<Quadbike> quadbikes; 
     
 }

@@ -32,19 +32,22 @@ import lombok.Setter;
 public class Message implements Serializable {
 
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
-    @Column(name="id")    
-    private Integer idMessage;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    public Integer idMessage; 
     @Column
     private String messageText;
-    @Column
-    private Quadbike quadbike;
-    
+
     //@ManyToOne(cascade = CascadeType.ALL)
-    //@JsonIgnoreProperties("messages")
-    //@JoinColumn(name="message_id")
-    @Column
-    private Client client;  
-    
+    @ManyToOne
+    @JoinColumn(name="quadbike_id")
+    @JsonIgnoreProperties({"messages","reservations"})
+    private Quadbike quadbike; 
+
+    //@ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="client_id")
+    @JsonIgnoreProperties({"messages","reservations"})
+    private Client client; 
     
 }

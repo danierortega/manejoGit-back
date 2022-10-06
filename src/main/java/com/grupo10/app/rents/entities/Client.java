@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.grupo10.app.rents.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,25 +29,25 @@ import lombok.Setter;
 public class Client implements Serializable {
 
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
-    @Column(name="id")    
-    private Integer idClient;
-    @Column
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    public Integer idClient; 
     @Column
     private String email;
     @Column
     private String password;
     @Column
+    private String name;
+    @Column
     private Integer age;
-    
-    //@OneToMany(cascade={CascadeType.PERSIST},mappedBy="messa<ge")
-    //@JsonIgnoreProperties("message")
-    @Column
-    private Message messages;
-    
-    @Column
-    private Reservation reservations;  
+   
+    @OneToMany(cascade={CascadeType.PERSIST},mappedBy="client")
+    @JsonIgnoreProperties({"client"})
+    private List<Message> messages;
+
+    @OneToMany(cascade={CascadeType.PERSIST},mappedBy="client")
+    @JsonIgnoreProperties("client")
+    private List<Reservation> reservations;
     
     
     

@@ -4,10 +4,13 @@
  */
 package com.grupo10.app.rents.service;
 
+import com.grupo10.app.rents.entities.Client;
 import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
-import com.grupo10.app.rents.entities.Category;
-import com.grupo10.app.rents.interfaces.ICategoryRepository;
+
 import com.grupo10.app.rents.entities.Quadbike;
+import com.grupo10.app.rents.entities.Reservation;
+import com.grupo10.app.rents.interfaces.IClientRepository;
+import com.grupo10.app.rents.interfaces.IReservationRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,29 +22,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationService {
 
+     @Autowired
+    IReservationRepository repository;
     @Autowired
-    IQuadbikeRepository repository;
-
+    IQuadbikeRepository quadbikeRepository;
     @Autowired
-    ICategoryRepository categoryRepository; 
+    IClientRepository clientRepository; 
+    
+    public Iterable<Reservation> get(){
 
-    public Iterable<Quadbike> get() {
-        Iterable<Quadbike> response = repository.findAll();
+        Iterable<Reservation> response = repository.findAll();
+
         return response;
     }
 
-    public String create(Quadbike request) {
-
-        Optional<Category> cat = categoryRepository.findById(request.getCategory().getId());
-        if (!cat.isEmpty()) {
-            request.setCategory(cat.get());
+    public String create(Reservation request){
+        Optional<Quadbike> qua = quadbikeRepository.findById(request.getQuadbike().getId());
+        Optional<Client> cl = clientRepository.findById(request.getClient().getIdClient());
+        if(!qua.isEmpty()){
+            request.setQuadbike(qua.get());
         }
-        if (request.getName() != null) {
+        if(!cl.isEmpty()){
+            request.setClient(cl.get());
+        }
+        if(request.getStartDate()!=null){
             repository.save(request);
-            return "created....";
-        } else {
-            return "falta el nombre";
+            return "Created ...";
+            
+        }else{
+            return "Falta el nombre";
         }
-
+       /*repository.save(request);
+      
+       return "Created ...";*/
+        
     }
 }

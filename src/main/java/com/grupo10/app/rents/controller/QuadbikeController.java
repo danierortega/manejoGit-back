@@ -35,10 +35,17 @@ public class QuadbikeController {
         return service.get(id);
     }
     
+    @GetMapping("/reports")
+    public List<Object[]> getReport() {
+        return service.getReport();
+    }
+    
+    /*
     @GetMapping("/reports/{id}")
     public List<Object[]> getReport(@PathVariable("id") Integer id) {
         return service.getReport();
     }
+    */
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)

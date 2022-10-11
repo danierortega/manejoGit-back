@@ -1,30 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.grupo10.app.rents.service;
 
-import com.grupo10.app.rents.entities.Client;
-import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
-
-import com.grupo10.app.rents.entities.Message;
-
-import com.grupo10.app.rents.entities.Quadbike;
-import com.grupo10.app.rents.interfaces.IClientRepository;
-import com.grupo10.app.rents.interfaces.IMessageRepository;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Andres
- */
+import com.grupo10.app.rents.entities.Client;
+import com.grupo10.app.rents.entities.Message;
+import com.grupo10.app.rents.entities.Quadbike;
+import com.grupo10.app.rents.interfaces.IClientRepository;
+import com.grupo10.app.rents.interfaces.IMessageRepository;
+import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
+
+
 @Service
 public class MessageService {
 
     @Autowired
-    IMessageRepository messageRepository;
+    IMessageRepository repository;
 
     @Autowired
     IClientRepository clientRepository;
@@ -34,7 +28,7 @@ public class MessageService {
 
     public Iterable<Message> get(){
 
-        Iterable<Message> response = messageRepository.findAll();
+        Iterable<Message> response = repository.findAll();
 
         return response;
     }
@@ -49,12 +43,41 @@ public class MessageService {
             request.setClient(cl.get());
         }
         if(request.getMessageText()!=null){
-           messageRepository.save(request);
+           repository.save(request);
             return "Created ...";
             
         }else{
             return "Falta el nombre";
         }
         
+    }
+    
+    public Message update(Message message) {
+        if (message.getIdMessage() != null) {
+            Optional<Message> e = repository.findById(message.getIdMessage());
+            if (!e.isEmpty()) {
+                if (message.getMessageText() != null) {
+                    e.get().setMessageText(message.getMessageText());
+                }
+                if (message.getQuadbike() != null) {
+                    e.get().setQuadbike(message.getQuadbike());
+                }
+                if (message.getClient() != null) {
+                    e.get().setClient(message.getClient());
+                }
+                repository.save(e.get());
+                return e.get();
+            } else {
+                return message;
+            }
+        } else {
+            return message;
+        }
+    }
+
+    public Boolean delete(Integer id) {
+        repository.deleteById(id);
+        Boolean delete = true;
+        return delete;
     }
 }

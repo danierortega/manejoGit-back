@@ -6,10 +6,14 @@ package com.grupo10.app.rents.controller;
 
 import com.grupo10.app.rents.entities.Client;
 import com.grupo10.app.rents.service.ClientService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -36,6 +40,21 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody Client request){        
         service.create(request);
+    }
+    
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(@RequestBody Client request){
+ 
+       service.update(request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@ResponseStatus(HttpStatus.ACCEPTED)
+    public void delete(@PathVariable("id") Integer id){
+ 
+       service.delete(id);
     }
     
 }

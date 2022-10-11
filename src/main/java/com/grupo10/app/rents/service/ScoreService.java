@@ -9,11 +9,10 @@ import com.grupo10.app.rents.interfaces.IReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.grupo10.app.rents.interfaces.IScoreRepository;
+import java.util.Optional;
+import org.springframework.stereotype.Service;
 
-/**
- *
- * @author user
- */
+@Service
 public class ScoreService {
     @Autowired
     IScoreRepository repository;
@@ -34,5 +33,34 @@ public class ScoreService {
         }else{
             return "Falta el nombre";
         }
+    }
+    
+    public Score update(Score score) {
+        if (score.getIdScore() != null) {
+            Optional<Score> e = repository.findById(score.getIdScore());
+            if (!e.isEmpty()) {
+                if (score.getMessageText() != null) {
+                    e.get().setMessageText(score.getMessageText());
+                }
+                if (score.getStars() != null) {
+                    e.get().setStars(score.getStars());
+                }
+                if (score.getReservation() != null) {
+                    e.get().setReservation(score.getReservation());
+                }
+                repository.save(e.get());
+                return e.get();
+            } else {
+                return score;
+            }
+        } else {
+            return score;
+        }
+    }
+
+    public Boolean delete(Integer id) {
+        repository.deleteById(id);
+        Boolean delete = true;
+        return delete;
     }
 }

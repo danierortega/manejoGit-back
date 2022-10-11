@@ -19,10 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- *
- * @author Andres
- */
+
 @Entity
 @Table(name="tb_quadbike")
 @Getter @Setter

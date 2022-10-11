@@ -54,11 +54,15 @@ public class QuadbikeController {
     }
     
     @PutMapping("/update")
-    public Quadbike update(@RequestBody Quadbike request) {
-        return service.update(request);
+    //@ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(@RequestBody Quadbike request) {
+        service.update(request);
     }
     
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@ResponseStatus(HttpStatus.ACCEPTED)
     public Boolean delete(@PathVariable("id") Integer id) {
         return service.delete(id);
     }

@@ -1,7 +1,11 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.grupo10.app.rents.controller;
 
-import com.grupo10.app.rents.entities.Message;
-import com.grupo10.app.rents.service.MessageService;
+import com.grupo10.app.rents.entities.Score;
+import com.grupo10.app.rents.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,31 +20,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Andres
+ * @author user
  */
 @RestController
-@RequestMapping("/api/Message")
-public class MessageController {
-
-
+@RequestMapping("/api/Score")
+public class ScoreController {
+    
     @Autowired
-    MessageService service;
+    ScoreService service;
 
     @GetMapping("/all")
-    public Iterable<Message> getMesssages(){
+    public Iterable<Score> getScores(){
 
+        /*Iterable<Quadbike> response = repository.findAll();
+
+        return response;*/
         return service.get();
     }
 
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody Message request){
-        service.create(request);
+    public void create(@RequestBody Score request){
+      
+       service.create(request);
     }
-    
+
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public void update(@RequestBody Message request){
+    public void update(@RequestBody Score request){
  
        service.update(request);
     }
@@ -51,5 +59,4 @@ public class MessageController {
  
        service.delete(id);
     }
-
 }
